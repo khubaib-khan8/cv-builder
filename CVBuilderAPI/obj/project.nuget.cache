@@ -1,13 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "eJ7alSQNDQc=",
+  "dgSpecHash": "TfCmpmzrqF4=",
   "success": true,
   "projectFilePath": "C:\\Users\\punjab computer\\Desktop\\CV builder\\CVBuilderAPI\\CVBuilderAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\punjab computer\\.nuget\\packages\\bcrypt.net-next\\4.2.0\\bcrypt.net-next.4.2.0.nupkg.sha512",
     "C:\\Users\\punjab computer\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\punjab computer\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\10.0.8\\microsoft.aspnetcore.authentication.jwtbearer.10.0.8.nupkg.sha512",
-    "C:\\Users\\punjab computer\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.5\\microsoft.aspnetcore.openapi.10.0.5.nupkg.sha512",
     "C:\\Users\\punjab computer\\.nuget\\packages\\microsoft.build\\17.7.2\\microsoft.build.17.7.2.nupkg.sha512",
     "C:\\Users\\punjab computer\\.nuget\\packages\\microsoft.build.framework\\17.14.28\\microsoft.build.framework.17.14.28.nupkg.sha512",
     "C:\\Users\\punjab computer\\.nuget\\packages\\microsoft.build.tasks.core\\17.14.28\\microsoft.build.tasks.core.17.14.28.nupkg.sha512",
