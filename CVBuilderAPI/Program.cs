@@ -6,37 +6,28 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ── Database ──────────────────────────────────────────────────
-string connectionString;
-
-// Railway individual Postgres variables
+// ── Database — PostgreSQL only ────────────────────────────────
 var pgHost     = Environment.GetEnvironmentVariable("PGHOST");
 var pgPort     = Environment.GetEnvironmentVariable("PGPORT") ?? "5432";
 var pgDatabase = Environment.GetEnvironmentVariable("PGDATABASE");
 var pgUser     = Environment.GetEnvironmentVariable("PGUSER");
 var pgPassword = Environment.GetEnvironmentVariable("PGPASSWORD");
 
+string connectionString;
+
 if (pgHost != null && pgDatabase != null && pgUser != null && pgPassword != null)
 {
+    // Railway Postgres
     connectionString = $"Host={pgHost};Port={pgPort};Database={pgDatabase};Username={pgUser};Password={pgPassword};SSL Mode=Require;Trust Server Certificate=true";
 }
 else
 {
-    // Local development — SQL Server
+    // Local — use appsettings.json connection string (still Npgsql for local too)
     connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 }
 
-// Check if using Postgres or SQL Server
-if (pgHost != null)
-{
-    builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseNpgsql(connectionString));
-}
-else
-{
-    builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseSqlServer(connectionString));
-}
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
 // ── JWT Auth ──────────────────────────────────────────────────
 var jwtKey    = Environment.GetEnvironmentVariable("JWT_KEY")
