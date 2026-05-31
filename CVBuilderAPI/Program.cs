@@ -6,23 +6,27 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ── Database — PostgreSQL only ────────────────────────────────
-var pgHost     = Environment.GetEnvironmentVariable("PGHOST");
-var pgPort     = Environment.GetEnvironmentVariable("PGPORT") ?? "5432";
-var pgDatabase = Environment.GetEnvironmentVariable("PGDATABASE");
-var pgUser     = Environment.GetEnvironmentVariable("PGUSER");
-var pgPassword = Environment.GetEnvironmentVariable("PGPASSWORD");
-
+// ── Database — PostgreSQL ─────────────────────────────────────
 string connectionString;
+var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-if (pgHost != null && pgDatabase != null && pgUser != null && pgPassword != null)
+if (!string.IsNullOrEmpty(databaseUrl))
 {
-    // Railway Postgres
-    connectionString = $"Host={pgHost};Port={pgPort};Database={pgDatabase};Username={pgUser};Password={pgPassword};SSL Mode=Require;Trust Server Certificate=true";
+    // Railway URL ko Npgsql format mein parse karna
+    var databaseUri = new Uri(databaseUrl);
+    var userInfo = databaseUri.UserInfo.Split(':');
+
+    connectionString = $"Host={databaseUri.Host};" +
+                       $"Port={databaseUri.Port};" +
+                       $"Database={databaseUri.LocalPath.TrimStart('/')};" +
+                       $"Username={userInfo[0]};" +
+                       $"Password={userInfo[1]};" +
+                       $"SSL Mode=Require;" +
+                       $"Trust Server Certificate=true;";
 }
 else
 {
-    // Local — use appsettings.json connection string (still Npgsql for local too)
+    // Local — use appsettings.json connection string
     connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 }
 
